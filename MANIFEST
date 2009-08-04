@@ -1,0 +1,15 @@
+.gitignore
+Build.PL
+Changes
+lib/YellowBot/API.pm
+lib/YellowBot/API/Request.pm
+lib/YellowBot/API/Response.pm
+Makefile.PL
+MANIFEST
+MANIFEST.SKIP
+README
+t/00-load.t
+t/basic.t
+t/boilerplate.t
+t/pod-coverage.t
+t/pod.t
