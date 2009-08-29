@@ -5,6 +5,9 @@ use Test::More;
 my $api_key    = $ENV{API_KEY};
 my $api_secret = $ENV{API_SECRET};
 
+plan skip_all => "API_USER_IDENTIFIERS must be set to run this test (and appropriate permissions set for your API key)"
+    unless $ENV{API_USER_IDENTIFIERS};
+
 plan skip_all => "API_KEY and API_SECRET environment variables must be set"
     unless $api_key and $api_secret;
 
