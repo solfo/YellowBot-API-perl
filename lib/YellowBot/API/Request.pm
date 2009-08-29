@@ -3,7 +3,7 @@ use Moose;
 use URI ();
 use Digest::SHA qw(hmac_sha256_hex);
 use HTTP::Request ();
-use namespace::clean;
+use namespace::clean -except => 'meta';
 
 use YellowBot::API::Response;
 
@@ -51,5 +51,6 @@ sub _get_parameter_string {
     return $str;
 }
 
+__PACKAGE__->meta->make_immutable;
 
 1;

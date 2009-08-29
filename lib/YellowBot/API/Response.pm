@@ -1,7 +1,7 @@
 package YellowBot::API::Response;
 use Moose;
 use JSON::XS qw(decode_json);
-use namespace::clean;
+use namespace::clean -except => 'meta';
 
 has http => (
    is  => 'ro',
@@ -19,5 +19,7 @@ sub _build_data {
     my $self = shift;
     return decode_json($self->http->content);
 }
+
+__PACKAGE__->meta->make_immutable;
 
 1;

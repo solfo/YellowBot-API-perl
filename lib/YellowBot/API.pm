@@ -5,7 +5,7 @@ use strict;
 use Moose;
 use LWP::UserAgent;
 
-use namespace::clean;
+use namespace::clean -except => 'meta';
 
 use YellowBot::API::Request;
 
@@ -54,6 +54,8 @@ sub call {
     my $http_response = $self->ua->request( $self->request(@_)->http_request );
     return YellowBot::API::Response->new(http => $http_response);
 }
+
+__PACKAGE__->meta->make_immutable;
 
 1;
 
@@ -120,7 +122,7 @@ L<http://search.cpan.org/dist/YellowBot-API/>
 
 =head1 COPYRIGHT & LICENSE
 
-Copyright 2009 Ask Bjørn Hansen, all rights reserved.
+Copyright 2009 Solfo, Inc, all rights reserved.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
