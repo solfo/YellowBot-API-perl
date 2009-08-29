@@ -36,7 +36,9 @@ has 'ua' => (
 
 sub _build_ua {
     my $self = shift;
-    LWP::UserAgent->new();
+    my $ua = LWP::UserAgent->new();
+    $ua->env_proxy;
+    return $ua;
 }
 
 sub request {
