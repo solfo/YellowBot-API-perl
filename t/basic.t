@@ -19,25 +19,25 @@ ok(my $api = YellowBot::API->new
 
 $api->server($ENV{API_SERVER} || 'http://www.yellowbot.com/');
 
-ok(my $response = $api->call('test/echo', foo => 'bar', abc => 123), 'call echo');
-is($response->data->{foo}, 'bar', 'got response echoed back');
+ok(my $data = $api->call('test/echo', foo => 'bar', abc => 123), 'call echo');
+is($data->{foo}, 'bar', 'got response echoed back');
 
-ok($response = $api->call('test/echo',
+ok($data = $api->call('test/echo',
                           api_user_identifier => 'abcd', 
                           foo => 'bar',
                           abc => 123),
    'call echo with user');
 
-is($response->data->{foo}, 'bar', 'got response echoed back again');
+is($data->{foo}, 'bar', 'got response echoed back again');
 
-ok($response = $api->call('test/user_token',
+ok($data = $api->call('test/user_token',
                              api_user_identifier => 'abcd'),
    'call user_token with user');
 
-ok($response->data->{user_token}, "Got user token: " . $response->data->{message});
+ok($data->{user_token}, "Got user token: " . $data->{message});
 
-ok($response = $api->call('test/user_token'),
+ok($data = $api->call('test/user_token'),
    'call user_token with user');
 
-ok(!$response->data->{user_token}, "No token: " . $response->data->{message});
+ok(!$data->{user_token}, "No token: " . $data->{message});
 

@@ -22,21 +22,21 @@ ok(my $api = YellowBot::API->new
 
 $api->server($ENV{API_SERVER} || 'http://www.yellowbot.com/');
 
-ok(my $response = $api->call('thumbs/down', location => 968305,
+ok(my $data = $api->call('thumbs/down', location => 968305,
       api_user_identifier => 'abc123',
   ), 'set thumbs');
-is($response->data->{thumb}, 'down', 'thumb was set down');
-is($response->data->{location}, 968305, 'id was returned');
+is($data->{thumb}, 'down', 'thumb was set down');
+is($data->{location}, 968305, 'id was returned');
 
-ok( $response = $api->call(
+ok( $data = $api->call(
         'thumbs/up',
         location            => '/solfo-burbank-ca.html',
         api_user_identifier => 'abc124',
     ),
     'set thumbs'
 );
-is($response->data->{thumb}, 'up', 'thumb was set up');
-is($response->data->{location}, '/solfo-burbank-ca.html', 'location uid was returned');
+is($data->{thumb}, 'up', 'thumb was set up');
+is($data->{location}, '/solfo-burbank-ca.html', 'location uid was returned');
 
 #use Data::Dump qw(pp);
 #pp($response);

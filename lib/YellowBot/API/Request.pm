@@ -36,7 +36,19 @@ sub http_request {
         $args{api_sig} = hmac_sha256_hex(_get_parameter_string(\%args), $self->api->api_secret);
     }
     $uri->query_form( %args );
-    return HTTP::Request->new(GET => $uri);
+
+    my $content = $uri->query;
+    $uri->query('');
+
+    my $request = HTTP::Request->new(POST => $uri);
+
+    $request->header('Content-Type' => 'application/x-www-form-urlencoded');
+    if (defined($content)) {
+        $request->header('Content-Length' => length($content));
+        $request->content($content);
+    }
+
+    return $request;
 }
 
 sub _get_parameter_string {
@@ -54,3 +66,50 @@ sub _get_parameter_string {
 __PACKAGE__->meta->make_immutable;
 
 1;
+
+__END__
+
+=head1 NAME
+
+YellowBot::API::Request - Request object for YellowBot::API
+
+=head1 SYNOPSIS
+
+This class manages setting up requests for the YellowBot::API,
+including signing of requests.
+
+No user servicable parts inside.  This part of the API is subject to change.
+
+
+    my $req = YellowBot::API::Request->new
+       (api    => $yellowbot_api,
+        method => 'location/detail',
+        args   => { foo => 'bar',
+                    fob => 123,
+                  },
+       );
+ 
+    my $http_request = $req->http_request; 
+
+
+=head1 METHODS
+
+=head2 api
+
+=head2 http_request
+
+Returns a HTTP::Request version of the request.
+
+=head1 AUTHOR
+
+Ask Bjørn Hansen, C<< <ask at develooper.com> >>
+
+=head1 COPYRIGHT & LICENSE
+
+Copyright 2009 Solfo Inc, all rights reserved.
+
+This program is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.
+
+=cut
+

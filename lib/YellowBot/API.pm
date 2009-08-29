@@ -54,7 +54,7 @@ sub request {
 sub call {
     my $self = shift;
     my $http_response = $self->ua->request( $self->request(@_)->http_request );
-    return YellowBot::API::Response->new(http => $http_response);
+    return YellowBot::API::Response->new(http => $http_response)->data;
 }
 
 __PACKAGE__->meta->make_immutable;
@@ -69,18 +69,35 @@ YellowBot::API - The great new YellowBot::API!
 
 =head1 SYNOPSIS
 
-Quick summary of what the module does.
-
-Perhaps a little code snippet.
-
     use YellowBot::API;
 
-    my $foo = YellowBot::API->new();
-    ...
+    my $yp = YellowBot::API->new
+       (api_key    => $api_key,
+        api_secret => $api_secret,
+       );
+
+    # if you are in Canada...
+    # $yp->server('http://www.weblocal.ca/');
+
+    my $data = $api->call('location/details',
+                          id           => '/solfo-burbank-ca.html'
+                          api_version  => 1,
+                          get_pictures => 10,
+                         );
+    print $data->{name}, "\n";
+    for my $p ( @{ $data->{pictures} } ) {
+       print $p->{url}, "\n";
+    }
+
 
 =head1 METHODS
 
-=head2 function1
+=head2 call( $endpoint, %args )
+
+Calls the endpoint (see the YellowBot API documentation) with the
+specified arguments.  Returns a hash data structure with the API
+results.
+
 
 =head1 AUTHOR
 

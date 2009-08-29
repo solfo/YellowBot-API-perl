@@ -16,7 +16,6 @@ ok(my $api = YellowBot::API->new
 
 $api->server($ENV{API_SERVER} || 'http://www.yellowbot.com/');
 
-ok(my $response = $api->call('location/details', api_version=>1, id => '/solfo-burbank-ca.html'), 'fetch solfo data');
-my $data = $response->data;
-is($response->data->{locations}->[0]->{name}, 'Solfo', 'got correct name');
+ok(my $data = $api->call('location/details', api_version=>1, id => '/solfo-burbank-ca.html'), 'fetch solfo data');
+is($data->{locations}->[0]->{name}, 'Solfo', 'got correct name');
 
