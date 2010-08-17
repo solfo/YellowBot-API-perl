@@ -46,6 +46,8 @@ sub http_request {
     if (defined($content)) {
         $request->header('Content-Length' => length($content));
         $request->content($content);
+        warn "YellowBot::API Request Content: $content\n"
+          if $ENV{API_DEBUG};
     }
 
     return $request;

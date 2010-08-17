@@ -100,6 +100,12 @@ specified arguments.  Returns a hash data structure with the API
 results.
 
 
+=head1 DEBUGGING
+
+If the API_DEBUG environment variable is set to a true value (1 for
+example) the request query and the response will be printed to STDERR.
+
+
 =head1 AUTHOR
 
 Ask Bjørn Hansen, C<< <ask at develooper.com> >>
@@ -136,13 +142,9 @@ L<http://search.cpan.org/dist/YellowBot-API/>
 
 =back
 
-
-=head1 ACKNOWLEDGEMENTS
-
-
 =head1 COPYRIGHT & LICENSE
 
-Copyright 2009 Solfo, Inc, all rights reserved.
+Copyright 2009-2010 Solfo, Inc, all rights reserved.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

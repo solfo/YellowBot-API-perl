@@ -22,7 +22,12 @@ sub _build_data {
                   error      => $self->http->status_line,
                 };
     }
-    return decode_json($self->http->content);
+    my $data = decode_json($self->http->content);
+    if ($ENV{API_DEBUG}) {
+        require Data::Dumper;
+        warn "YellowBot::API Response: ", Data::Dumper::Dumper($data);
+    }
+    return $data;
 }
 
 __PACKAGE__->meta->make_immutable;
