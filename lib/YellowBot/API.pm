@@ -64,6 +64,10 @@ local ($YellowBot::API::VERSION) = ('devel') unless defined $YellowBot::API::VER
 
 __END__
 
+=pod
+
+=encoding utf8
+
 =head1 NAME
 
 YellowBot::API - The great new YellowBot::API!
@@ -105,6 +109,7 @@ results.
 If the API_DEBUG environment variable is set to a true value (1 for
 example) the request query and the response will be printed to STDERR.
 
+See also the ybapi utility, L<ybapi>. 
 
 =head1 AUTHOR
 
@@ -112,35 +117,13 @@ Ask Bjørn Hansen, C<< <ask at develooper.com> >>
 
 =head1 BUGS
 
-Please report any bugs or feature requests to C<bug-yellowbot-api at rt.cpan.org>, or through
-the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=YellowBot-API>.  I will be notified, and then you'll
-automatically be notified of progress on your bug as I make changes.
+Please report any bugs or feature requests to the issue tracker at 
+L<http://github.com/solfo/YellowBot-API-perl/issues>.
 
+The Git repository is available at
+L<http://github.com/solfo/YellowBot-API-perl> (Clone with C<git clone
+http://github.com/solfo/YellowBot-API-perl.git>).
 
-=head1 SUPPORT
-
-You can find documentation for this module with the perldoc command.
-
-    perldoc YellowBot::API
-
-
-You can also look for information at:
-
-=over 4
-
-=item * RT: CPAN's request tracker
-
-L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=YellowBot-API>
-
-=item * CPAN Ratings
-
-L<http://cpanratings.perl.org/d/YellowBot-API>
-
-=item * Search CPAN
-
-L<http://search.cpan.org/dist/YellowBot-API/>
-
-=back
 
 =head1 COPYRIGHT & LICENSE
 
