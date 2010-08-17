@@ -31,10 +31,10 @@ sub http_request {
     my %args = (%{ $self->args },
                 api_key => $self->api->api_key,
                );
-    if ($args{api_user_identifier}) {
-        $args{api_ts}  = time;
-        $args{api_sig} = hmac_sha256_hex(_get_parameter_string(\%args), $self->api->api_secret);
-    }
+
+    $args{api_ts}  = time;
+    $args{api_sig} = hmac_sha256_hex(_get_parameter_string(\%args), $self->api->api_secret);
+
     $uri->query_form( %args );
 
     my $content = $uri->query;

@@ -18,6 +18,7 @@ has 'api_key' => (
 has 'api_secret' => (
     isa => 'Str',
     is  => 'ro',
+    required => 1,
 );
 
 has 'server' => (
