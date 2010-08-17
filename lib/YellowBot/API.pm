@@ -9,8 +9,6 @@ use namespace::clean -except => 'meta';
 
 use YellowBot::API::Request;
 
-our $VERSION = '0.01';
-
 has 'api_key' => (
     isa => 'Str',
     is  => 'ro',
@@ -58,6 +56,8 @@ sub call {
 }
 
 __PACKAGE__->meta->make_immutable;
+
+local ($YellowBot::API::VERSION) = ('devel') unless defined $YellowBot::API::VERSION;
 
 1;
 
