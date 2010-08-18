@@ -1,6 +1,6 @@
 package YellowBot::API::Response;
 use Moose;
-use JSON::XS qw(decode_json);
+use JSON qw(decode_json);
 use namespace::clean -except => 'meta';
 
 has http => (

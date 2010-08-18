@@ -1,6 +1,10 @@
 Revision history for YellowBot-API
 
 {{$NEXT}}
+       Add missing dependencies
+       Use JSON instead of JSON::XS
+
+0.91   August 17, 2010
        Add signin_url method.
        Documentation updates.
 
