@@ -40,7 +40,7 @@ sub _build_ua {
     return $ua;
 }
 
-sub request {
+sub _request {
     my ($self, $method, %args) = @_;
     return YellowBot::API::Request->new(
         method => $method,
@@ -52,7 +52,7 @@ sub request {
 
 sub call {
     my $self = shift;
-    my $http_response = $self->ua->request( $self->request(@_)->http_request );
+    my $http_response = $self->ua->request( $self->_request(@_)->http_request );
     return YellowBot::API::Response->new(http => $http_response)->data;
 }
 
