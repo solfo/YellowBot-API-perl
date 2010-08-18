@@ -24,7 +24,7 @@ has args => (
    is  => 'rw',
 );
 
-sub query {
+sub _query {
     my %args = @_;
 
     my $api_secret = delete $args{api_secret};
@@ -42,7 +42,7 @@ sub http_request {
     my $uri = URI->new( $self->api->server );
     $uri->path("/api/" . $self->method );
 
-    my $content = query
+    my $content = _query
       (
        %{ $self->args },
        api_key    => $self->api->api_key,

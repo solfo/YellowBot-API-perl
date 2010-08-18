@@ -62,7 +62,7 @@ sub signin_url {
     my $domain = $args{domain} ? "http://$args{domain}" : $self->server;
     my $uri    = URI->new("$domain/signin/partner");
     $uri->query(
-        YellowBot::API::Request::query(
+        YellowBot::API::Request::_query(
             %args,
             api_key    => $self->api_key,
             api_secret => $self->api_secret,
