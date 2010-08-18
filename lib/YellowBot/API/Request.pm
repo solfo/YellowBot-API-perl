@@ -24,21 +24,30 @@ has args => (
    is  => 'rw',
 );
 
+sub query {
+    my %args = @_;
+
+    my $api_secret = delete $args{api_secret};
+
+    $args{api_ts}  = time;
+    $args{api_sig} = hmac_sha256_hex(_get_parameter_string(\%args), $api_secret);
+
+    my $uri = URI->new(); 
+    $uri->query_form( %args );
+    return $uri->query;
+}
+
 sub http_request {
     my $self = shift;
     my $uri = URI->new( $self->api->server );
     $uri->path("/api/" . $self->method );
-    my %args = (%{ $self->args },
-                api_key => $self->api->api_key,
-               );
 
-    $args{api_ts}  = time;
-    $args{api_sig} = hmac_sha256_hex(_get_parameter_string(\%args), $self->api->api_secret);
-
-    $uri->query_form( %args );
-
-    my $content = $uri->query;
-    $uri->query('');
+    my $content = query
+      (
+       %{ $self->args },
+       api_key    => $self->api->api_key,
+       api_secret => $self->api->api_secret,
+      );
 
     my $request = HTTP::Request->new(POST => $uri);
 

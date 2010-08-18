@@ -56,6 +56,21 @@ sub call {
     return YellowBot::API::Response->new(http => $http_response)->data;
 }
 
+sub signin_url {
+    my $self   = shift;
+    my %args   = @_;
+    my $domain = $args{domain} ? "http://$args{domain}" : $self->server;
+    my $uri    = URI->new("$domain/signin/partner");
+    $uri->query(
+        YellowBot::API::Request::query(
+            %args,
+            api_key    => $self->api_key,
+            api_secret => $self->api_secret,
+        )
+    );
+    return $uri->as_string;
+}
+
 __PACKAGE__->meta->make_immutable;
 
 local ($YellowBot::API::VERSION) = ('devel') unless defined $YellowBot::API::VERSION;
@@ -95,6 +110,13 @@ YellowBot::API - The great new YellowBot::API!
     }
 
 
+    my $signin_url = $api->signin_url(
+       domain => 'reputation.example.com',
+       api_user_identifier => 'abc123',
+       brand => 'yellowbot',
+    );
+
+
 =head1 METHODS
 
 =head2 call( $endpoint, %args )
@@ -103,6 +125,10 @@ Calls the endpoint (see the YellowBot API documentation) with the
 specified arguments.  Returns a hash data structure with the API
 results.
 
+=head2 signin_url( %options )
+
+Generate a URL for the "silent partner login" feature.  See example
+above and API documentation for details.
 
 =head1 DEBUGGING
 

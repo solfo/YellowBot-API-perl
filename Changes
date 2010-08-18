@@ -1,6 +1,7 @@
 Revision history for YellowBot-API
 
 {{$NEXT}}
+       Add signin_url method.
        Documentation updates.
 
 0.90   August 17, 2010
