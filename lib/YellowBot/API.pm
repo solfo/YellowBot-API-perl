@@ -91,13 +91,13 @@ YellowBot::API - The great new YellowBot::API!
 
     use YellowBot::API;
 
-    my $yp = YellowBot::API->new
+    my $api = YellowBot::API->new
        (api_key    => $api_key,
         api_secret => $api_secret,
        );
 
     # if you are in Canada...
-    # $yp->server('http://www.weblocal.ca/');
+    # $api->server('http://www.weblocal.ca/');
 
     my $data = $api->call('location/details',
                           id           => '/solfo-burbank-ca.html'
