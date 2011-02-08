@@ -23,6 +23,10 @@ sub _build_data {
                 };
     }
     my $data = decode_json($self->http->content);
+    # if return isn't a hashref, then wrap it in one, with 'result' key
+    if(ref($data) ne 'HASH') {
+        $data = { result => $data };
+    }
     if ($ENV{API_DEBUG}) {
         require Data::Dumper;
         warn "YellowBot::API Response: ", Data::Dumper::Dumper($data);
