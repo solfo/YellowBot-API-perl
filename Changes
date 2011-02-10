@@ -1,6 +1,8 @@
 Revision history for YellowBot-API
 
 {{$NEXT}}
+
+0.92   August 18, 2010
        Add missing dependencies
        Use JSON instead of JSON::XS
 
