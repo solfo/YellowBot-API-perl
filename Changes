@@ -1,6 +1,7 @@
 Revision history for YellowBot-API
 
 {{$NEXT}}
+       Support file uploads
 
 0.92   August 18, 2010
        Add missing dependencies
