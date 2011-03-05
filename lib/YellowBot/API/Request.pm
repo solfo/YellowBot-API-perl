@@ -79,6 +79,10 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
+=pod
+
+=encoding utf8
+
 =head1 NAME
 
 YellowBot::API::Request - Request object for YellowBot::API
