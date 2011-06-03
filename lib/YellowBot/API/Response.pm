@@ -23,7 +23,7 @@ sub _build_data {
                 };
     }
     my $data = decode_json($self->http->content);
-    if ($ENV{API_DEBUG} > 2) {
+    if ($ENV{API_DEBUG} and $ENV{API_DEBUG} > 2) {
         warn "JSON response:\n" . $self->http->content . "\n";
     }
 
