@@ -29,10 +29,22 @@ sub _query {
 
     my $api_secret = delete $args{api_secret};
 
-    $args{api_ts}  = time;
-    $args{api_sig} = hmac_sha256_hex(_get_parameter_string(\%args), $api_secret);
+    $args{api_ts}  ||= time;
+    $args{api_sig}   = hmac_sha256_hex(_get_parameter_string(\%args), $api_secret);
 
     return %args;
+}
+
+sub _signed_query_form {
+    my $self = shift;
+
+    return _query
+      (
+       %{ $self->args },
+       api_key    => $self->api->api_key,
+       api_secret => $self->api->api_secret,
+      );
+
 }
 
 sub http_request {
@@ -40,14 +52,7 @@ sub http_request {
     my $uri = URI->new( $self->api->server );
     $uri->path("/api/" . $self->method );
 
-    my %args = %{ $self->args };
-
-    my %content = _query
-      (
-       %args,
-       api_key    => $self->api->api_key,
-       api_secret => $self->api->api_secret,
-      );
+    my %content = $self->_signed_query_form;
 
     my $request = POST( $uri, [ %content ],
                         'Content-Type' => 'form-data',
