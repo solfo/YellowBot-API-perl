@@ -1,6 +1,8 @@
 Revision history for YellowBot-API
 
 {{$NEXT}}
+
+0.94   June 2, 2011
        Fix signin_url bug
        More tests
 
