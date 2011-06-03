@@ -1,6 +1,10 @@
 Revision history for YellowBot-API
 
 {{$NEXT}}
+       Fix signin_url bug
+       More tests
+
+0.93   March 5, 2011
        Support file uploads
 
 0.92   August 18, 2010
