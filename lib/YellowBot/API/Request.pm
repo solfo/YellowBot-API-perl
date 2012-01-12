@@ -35,28 +35,45 @@ sub _query {
     return %args;
 }
 
+sub _signed_args {
+    return shift->args;
+}
+
 sub _signed_query_form {
     my $self = shift;
 
+    my $signed_args = $self->_signed_args;
     return _query
       (
-       %{ $self->args },
+       %$signed_args,
        api_key    => $self->api->api_key,
        api_secret => $self->api->api_secret,
       );
 
 }
 
-sub http_request {
+sub _build_uri {
     my $self = shift;
     my $uri = URI->new( $self->api->server );
-    $uri->path("/api/" . $self->method );
+    $uri->path("/api/" . $self->method);
+    return $uri;
+}
 
+sub _build_request {
+    my $self = shift;
+    
+    my $uri = $self->_build_uri;
     my %content = $self->_signed_query_form;
 
-    my $request = POST( $uri, [ %content ],
-                        'Content-Type' => 'form-data',
-                      );
+    return POST($uri, [%content], 'Content-Type' => 'form-data');
+}
+
+sub http_request {
+    my $self = shift;
+
+    my $request = $self->_build_request;
+
+    #$request->dump( prefix => ' > ' );
 
     if ($ENV{API_DEBUG}) {
         require Data::Dumper;

@@ -3,6 +3,7 @@ package YellowBot::API;
 use warnings;
 use strict;
 use Moose;
+use UNIVERSAL::require;
 use LWP::UserAgent;
 
 use namespace::clean -except => 'meta';
@@ -27,6 +28,12 @@ has 'server' => (
     default => 'http://www.yellowbot.com',
 );
 
+has 'req_method' => (
+    isa => 'Str',
+    is  => 'rw',
+    default => 'post',    # or 'j-post'
+);
+
 has 'ua' => (
     is  => 'rw',
     isa => 'LWP::UserAgent',
@@ -40,9 +47,18 @@ sub _build_ua {
     return $ua;
 }
 
+my %REQ_CLASS = (
+    'post' => 'YellowBot::API::Request',
+    'j-post' => 'YellowBot::API::Request::Json',
+);
+
 sub _request {
     my ($self, $method, %args) = @_;
-    return YellowBot::API::Request->new(
+
+    my $request_class = $REQ_CLASS{$self->req_method};
+    $request_class->require;
+
+    return $request_class->new(
         method => $method,
         args   => \%args,
         api    => $self,
