@@ -1,7 +1,4 @@
 package YellowBot::API::Request::Json;
-{
-  $YellowBot::API::Request::Json::VERSION = '0.94';
-}
 
 use Moose;
 
