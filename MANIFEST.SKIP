@@ -42,3 +42,6 @@
 
 # XS shit
 \.(?:bs|c|o)$
+
+# Avoid MYMETA files
+^MYMETA\.
