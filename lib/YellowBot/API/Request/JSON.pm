@@ -1,4 +1,4 @@
-package YellowBot::API::Request::Json;
+package YellowBot::API::Request::JSON;
 
 use Moose;
 
@@ -32,7 +32,7 @@ sub _more_args {
 
 sub _build_request {
     my $self = shift;
-    
+
     my $uri = $self->_build_uri;
     my %query = $self->_signed_query_form;
     $uri->query_form(%query);
@@ -74,8 +74,8 @@ No user servicable parts inside.  This part of the API is subject to change.
                     fob => 123,
                   },
        );
- 
-    my $http_request = $req->http_request; 
+
+    my $http_request = $req->http_request;
 
 
 =head1 METHODS

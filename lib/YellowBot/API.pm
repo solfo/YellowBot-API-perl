@@ -49,7 +49,7 @@ sub _build_ua {
 
 my %REQ_CLASS = (
     'post' => 'YellowBot::API::Request',
-    'j-post' => 'YellowBot::API::Request::Json',
+    'j-post' => 'YellowBot::API::Request::JSON',
 );
 
 sub _request {
