@@ -1,6 +1,7 @@
 package YellowBot::API::Request;
 use Moose;
 use URI ();
+use Carp qw(croak);
 use Digest::SHA qw(hmac_sha256_hex);
 use HTTP::Request::Common qw(POST);
 use namespace::clean -except => 'meta';
@@ -83,13 +84,32 @@ sub http_request {
     return $request;
 }
 
+sub _file_as_value {
+    my $v  = shift;
+    my $fn = $v->[1];
+    unless (defined $fn) {    # Infer from local file name
+        $fn = $v->[0];
+        $fn =~ s,.*/,, if defined $fn;
+    }
+    unless ($fn) {
+        croak "File uploads must have file names";
+    }
+    return $fn;
+}
+# Based on HTTP::Request::form_data() handling of uploads
+# according to the specification [ $file, $usename, @headers ]
+
 sub _get_parameter_string {
     my $args = shift;
 
     my $str = "";
     for my $key (sort {$a cmp $b} keys %{$args}) {
         next if $key eq 'api_sig';
-        my $value = (defined($args->{$key})) ? $args->{$key} : "";
+        my $v = $args->{$key};
+        my $value =
+          defined($v)
+          ? (ref($v) ? _file_as_value($v) : $v)
+          : "";
         $str .= $key . $value;
     }
     return $str;
