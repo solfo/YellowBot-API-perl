@@ -11,23 +11,54 @@ extends 'YellowBot::API::Request';
 
 has '+args' => (
    isa => 'HashRef[Any]',
+   trigger => \&_split_args,
 );
 
+has '_get_args' => (
+   is  => 'ro',
+   isa => 'HashRef[Str]',
+   writer => '_set_get_args',
+);
+
+has '_body_args' => (
+   is  => 'ro',
+   isa => 'HashRef[Any]',
+   writer => '_set_body_args',
+);
+
+sub _split_args {
+    my ($self, $args) = @_;
+
+    my $get_args;
+    my $body_args;
+
+    my %args = %{$self->args};
+    delete $args{$_} for qw(api_sig api_secret auth_token);
+
+    if (exists $args{_data}) {
+        $body_args = delete $args{_data};
+        $get_args  = \%args;
+    }
+    else {
+        $get_args = {};
+        for my $p (qw(api_ts api_user_identifier)) {
+            $get_args->{$p} = delete $args{$p} if exists $args{$p};
+        }
+        $body_args = \%args;
+    }
+
+    $self->_set_get_args($get_args);
+    $self->_set_body_args($body_args);
+}
+    
 sub _signed_args {
     my $self = shift;
-    my $all_args = $self->args;
-    my %args;
-    for my $p (qw(api_ts api_user_identifier)) {
-        $args{$p} = $all_args->{$p} if exists $all_args->{$p};
-    }
-    return \%args;
+    return $self->_get_args;
 }
 
 sub _more_args {
     my $self = shift;
-    my %args = %{ $self->args };
-    delete @args{qw(api_ts api_key api_user_identifier api_sig api_secret auth_token)};
-    return %args;
+    return $self->_body_args;
 }
 
 sub _build_request {
@@ -37,11 +68,11 @@ sub _build_request {
     my %query = $self->_signed_query_form;
     $uri->query_form(%query);
 
-    my %extra = $self->_more_args;
+    my $extra = $self->_more_args;
 
     # JSON POST request
     my $req = HTTP::Request->new('POST', $uri, ['Content-Type' => 'application/json; charset=utf-8']);
-    my $req_content = encode_json(\%extra);
+    my $req_content = encode_json($extra);
     $req->content($req_content);
     return $req;
 }
