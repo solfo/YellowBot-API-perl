@@ -1,6 +1,7 @@
 Revision history for YellowBot-API
 
-{{$NEXT}}
+0.97   March 9, 2012
+       Special handling of "_data" parameter for JSON POSTs
 
 0.96   February 23, 2012
        Fix signing of file uploads as parameters
