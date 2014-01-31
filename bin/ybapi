@@ -46,6 +46,10 @@ print $json->encode($response);
 
 __END__
 
+=pod
+
+=encoding utf8
+
 =head1 NAME 
 
 ybapi - YellowBot API Test Utility
