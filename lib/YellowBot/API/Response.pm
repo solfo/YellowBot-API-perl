@@ -51,22 +51,18 @@ __END__
 
 =head1 NAME
 
-YellowBot::API::Request - Request object for YellowBot::API
+YellowBot::API::Response - Response object for YellowBot::API
 
 =head1 SYNOPSIS
 
-This class manages setting up requests for the YellowBot::API,
-including signing of requests.
+This class manages interpreting responses for the YellowBot::API,
+including the decoding of the JSON content.
 
 No user servicable parts inside.  This part of the API is subject to change.
 
 =head1 METHODS
 
-=head2 api
-
-=head2 http_request
-
-Returns a HTTP::Request version of the request.
+No pulbic methods.
 
 =head1 AUTHOR
 
