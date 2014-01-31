@@ -4,6 +4,7 @@ use warnings;
 use strict;
 use Moose;
 use UNIVERSAL::require;
+use URI;
 use LWP::UserAgent;
 
 use namespace::clean -except => 'meta';
@@ -25,8 +26,27 @@ has 'api_secret' => (
 has 'server' => (
     isa => 'Str',
     is  => 'rw',
-    default => 'http://www.yellowbot.com',
+    default => 'www.yellowbot.com',
+    initializer => sub { $_[2]->(_canon_server($_[1])) },
 );
+
+sub _canon_server {
+    my $server = shift;
+    if ($server =~ /^https?:/) {
+        return URI->new($server)->host;
+    }
+    return $server;
+}
+
+around 'server' => sub {
+    my $orig = shift;
+    my $self = shift;
+
+    return $self->$orig
+      unless @_;
+
+    $self->$orig(_canon_server(shift));
+};
 
 has 'req_method' => (
     isa => 'Str',
@@ -75,8 +95,11 @@ sub call {
 sub signin_url {
     my $self   = shift;
     my %args   = @_;
-    my $domain = $args{domain} ? "https://$args{domain}" : $self->server;
-    my $uri    = URI->new("$domain/signin/partner");
+    my $domain = $args{domain} ? $args{domain} : $self->server;
+    my $uri = URI->new();
+    $uri->scheme('https');
+    $uri->host($domain);
+    $uri->path('/signin/partner');
 
     %args = YellowBot::API::Request::_query(
         %args,

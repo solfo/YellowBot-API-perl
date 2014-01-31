@@ -55,7 +55,9 @@ sub _signed_query_form {
 
 sub _build_uri {
     my $self = shift;
-    my $uri = URI->new( $self->api->server );
+    my $uri = URI->new;
+    $uri->scheme('http');
+    $uri->host( $self->api->server );
     $uri->path("/api/" . $self->method);
     return $uri;
 }
